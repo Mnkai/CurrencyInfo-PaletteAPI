@@ -1,0 +1,58 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <CheckBoxPreference
+        android:id="@+id/enabledCheckBox"
+        android:key="enabledCheckBox"
+        android:title="@string/enabledModule"
+        android:summary="@string/enabledModuleSummary"
+        android:defaultValue="false" />
+
+    <EditTextPreference
+        android:key="keywordToActivate"
+        android:title="@string/keyword"
+        android:defaultValue="@string/keywordValue"
+        android:summary="@string/keywordSummary"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:hint="@string/keywordValue"
+        android:maxLines="1" />
+
+    <EditTextPreference
+        android:key="mainCurrency"
+        android:title="@string/mainCurrency"
+        android:defaultValue="@string/mainCurrencyValue"
+        android:summary="@string/mainCurrencySummary"
+        android:selectAllOnFocus="true"
+        android:inputType="textCapCharacters"
+        android:hint="@string/mainCurrencyValue"
+        android:singleLine="true"
+        android:maxLines="1" />
+
+    <CheckBoxPreference
+        android:id="@+id/userLimitCheckBox"
+        android:key="userLimitCheckBox"
+        android:title="@string/activateMethod"
+        android:summary="@string/activateMethodSummary"
+        android:defaultValue="true" />
+
+    <EditTextPreference
+        android:key="uuidSetting"
+        android:title="@string/myUUID"
+        android:summary="@string/myUUIDSummary"
+        android:selectAllOnFocus="true"
+        android:inputType="numberDecimal"
+        android:singleLine="true"
+        android:maxLines="1" />
+
+    <!--
+    <ListPreference
+        android:key="example_list"
+        android:title="@string/pref_title_add_friends_to_messages"
+        android:defaultValue="-1"
+        android:entries="@array/pref_example_list_titles"
+        android:entryValues="@array/pref_example_list_values"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null" />
+
+    -->
+</PreferenceScreen>

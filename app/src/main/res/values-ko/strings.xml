@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">환율정보 플러그인 설정</string>
+    <string name="enabledModule">플러그인 활성화</string>
+    <string name="enabledModuleSummary">타임라인에서 키워드를 사용해 환율 정보를 바로 조회합니다.</string>
+    <string name="keyword">작동 명령</string>
+    <string name="keywordSummary">조회를 시작할 키워드를 설정합니다. (기본값: !환율)</string>
+    <string name="mainCurrency">기준통화</string>
+    <string name="mainCurrencySummary">환전의 기준이 될 통화를 설정합니다. (기본값: KRW)</string>
+    <string name="keywordValue">!환율</string>
+    <string name="mainCurrencyValue">KRW</string>
+    <string name="activateMethod">유저 제한</string>
+    <string name="activateMethodSummary">리밋을 방지하기 위해 내 트윗에만 반응합니다. 설정하지 않았을 경우 타임라인의 모든 트윗에 반응합니다.</string>
+    <string name="myUUIDSummary">팔레트 API 1이 현재 로그인 된 유저의 UUID를 읽어오는 걸 지원하지 않기 때문에, 사용할 계정의 UUID를 설정해야 합니다. 유저 제한을 설정하지 않았을 경우 이 설정은 무시됩니다.</string>
+    <string name="myUUID">트위터 유저 UUID 설정</string>
+</resources>

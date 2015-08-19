@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">CurrencyInfo Plugin Setting</string>
+    <string name="enabledModule">Enable Plugin</string>
+    <string name="enabledModuleSummary">Enable plugin to lookup currency information directly on timeline.</string>
+    <string name="keyword">Keyword</string>
+    <string name="keywordSummary">Keyword to activate search (Default: !currency)</string>
+    <string name="mainCurrency">Main currency</string>
+    <string name="mainCurrencySummary">Main currency to use (Default: USD)</string>
+    <string name="keywordValue">!currency</string>
+    <string name="mainCurrencyValue">USD</string>
+    <string name="activateMethod">Limit usage</string>
+    <string name="activateMethodSummary">To prevent rate limiting, limit usage to myself only.</string>
+    <string name="myUUID">Twitter UUID</string>
+    <string name="myUUIDSummary">Since Palette API 1 does not support reading current user\'s UUID, you have to input your own Twitter user UUID. If limit usage is not enabled, this setting will be ignored.</string>
+</resources>
