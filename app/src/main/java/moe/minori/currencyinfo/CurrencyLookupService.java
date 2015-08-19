@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.os.Handler;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
@@ -66,7 +67,7 @@ public class CurrencyLookupService extends Service {
             }
         };
 
-        registerReceiver(receiver, filter);
+        registerReceiver(receiver, filter, Consts.EXTERNAL_BROADCAST_API, null);
     }
 
     @Override

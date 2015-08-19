@@ -8,8 +8,8 @@ android {
         applicationId "moe.minori.currencyinfo"
         minSdkVersion 19
         targetSdkVersion 22
-        versionCode 3
-        versionName "1.0 r3"
+        versionCode 4
+        versionName "1.0 r4"
     }
     buildTypes {
         release {
