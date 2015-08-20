@@ -46,23 +46,35 @@ public class CurrencyLookupService extends Service {
                 //Log.d("CurrencyLookupService", "Received status");
 
                 String FROMTEXT = intent.getStringExtra("FROMTEXT");
-                String FROMTEXTSCREEN = intent.getStringExtra("FROMTEXTSCREEN");
-                long FROMLONG = intent.getLongExtra("FROMLONG", -1);
-                String TEXT = intent.getStringExtra("TEXT");
+                final String FROMTEXTSCREEN = intent.getStringExtra("FROMTEXTSCREEN");
+                final long FROMLONG = intent.getLongExtra("FROMLONG", -1);
+                final String TEXT = intent.getStringExtra("TEXT");
+                final long TEXTLONG = intent.getLongExtra("TEXTLONG", -1);
                 long REPLY_TO = intent.getLongExtra("REPLY_TO", -1);
 
                 if (preferences.getBoolean("userLimitCheckBox", true)) {
                     // user limit on
-                    if (Long.parseLong(preferences.getString("uuidSetting", "-1")) == FROMLONG) {
-                        // my tweet, process
 
-                        processor(TEXT, FROMTEXTSCREEN);
+                    // find out if this tweet is mine
+                    IntentFilter filter = new IntentFilter(Consts.MYINFO_RESULT);
+                    BroadcastReceiver receiver = new BroadcastReceiver() {
+                        @Override
+                        public void onReceive(Context context, Intent intent) {
 
-                    }
+                            unregisterReceiver(this);
+
+                            if (intent.getLongExtra("UUID", -1) == FROMLONG)
+                                processor(TEXT, TEXTLONG, FROMTEXTSCREEN);
+                        }
+                    };
+
+                    registerReceiver(receiver, filter, Consts.EXTERNAL_BROADCAST_API, null);
+
+                    sendBroadcast(new Intent(Consts.MYINFO_QUERY), Consts.EXTERNAL_BROADCAST_API);
                 } else {
                     // user limit off
 
-                    processor(TEXT, FROMTEXTSCREEN);
+                    processor(TEXT, TEXTLONG, FROMTEXTSCREEN);
                 }
             }
         };
@@ -92,7 +104,7 @@ public class CurrencyLookupService extends Service {
         }
     }
 
-    private void processor(String TEXT, String FROMTEXTSCREEN) {
+    private void processor(String TEXT, long TEXTLONG, String FROMTEXTSCREEN) {
         //Log.d("Processor", "Started");
         String processResult = preprocessor(TEXT);
         if (processResult != null) {
@@ -107,7 +119,8 @@ public class CurrencyLookupService extends Service {
                 responseBuilder.append("Unknown error");
 
                 sendBroadcast(new Intent(Consts.REQ_WRITE_TWEET)
-                                .putExtra("DATA", responseBuilder.toString()),
+                                .putExtra("DATA", responseBuilder.toString())
+                                .putExtra("REPLY_TO", TEXTLONG),
                         Consts.EXTERNAL_BROADCAST_API);
             } else {
                 StringBuilder responseBuilder = new StringBuilder();
@@ -122,7 +135,8 @@ public class CurrencyLookupService extends Service {
                 responseBuilder.append(currency);
 
                 sendBroadcast(new Intent(Consts.REQ_WRITE_TWEET)
-                                .putExtra("DATA", responseBuilder.toString()),
+                                .putExtra("DATA", responseBuilder.toString())
+                                .putExtra("REPLY_TO", TEXTLONG),
                         Consts.EXTERNAL_BROADCAST_API);
             }
         }

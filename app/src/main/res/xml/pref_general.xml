@@ -35,6 +35,7 @@
         android:summary="@string/activateMethodSummary"
         android:defaultValue="true" />
 
+    <!--
     <EditTextPreference
         android:key="uuidSetting"
         android:title="@string/myUUID"
@@ -43,6 +44,7 @@
         android:inputType="numberDecimal"
         android:singleLine="true"
         android:maxLines="1" />
+-->
 
     <!--
     <ListPreference
