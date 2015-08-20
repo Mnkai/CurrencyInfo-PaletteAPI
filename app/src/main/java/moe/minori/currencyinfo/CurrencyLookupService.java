@@ -18,6 +18,8 @@ import android.util.Log;
 public class CurrencyLookupService extends Service {
 
     BroadcastReceiver receiver;
+    BroadcastReceiver myInfoReceiver;
+
     SharedPreferences preferences;
 
     @Nullable
@@ -30,7 +32,7 @@ public class CurrencyLookupService extends Service {
     public void onCreate() {
         super.onCreate();
 
-        //Log.d("CurrencyLookupService", "Started Service");
+        Log.d("CurrencyLookupService", "Started Service");
 
         CurrencyModule.register(getApplicationContext());
         preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -43,7 +45,7 @@ public class CurrencyLookupService extends Service {
             @Override
             public void onReceive(Context context, Intent intent) {
 
-                //Log.d("CurrencyLookupService", "Received status");
+                Log.d("CurrencyLookupService", "Received status");
 
                 String FROMTEXT = intent.getStringExtra("FROMTEXT");
                 final String FROMTEXTSCREEN = intent.getStringExtra("FROMTEXTSCREEN");
@@ -56,19 +58,21 @@ public class CurrencyLookupService extends Service {
                     // user limit on
 
                     // find out if this tweet is mine
-                    IntentFilter filter = new IntentFilter(Consts.MYINFO_RESULT);
-                    BroadcastReceiver receiver = new BroadcastReceiver() {
+                    IntentFilter myInfoFilter = new IntentFilter(Consts.MYINFO_RESULT);
+
+                    myInfoReceiver = new BroadcastReceiver() {
                         @Override
                         public void onReceive(Context context, Intent intent) {
 
                             unregisterReceiver(this);
 
+                            Log.d("UUID", intent.getLongExtra("UUID", -1) + "");
                             if (intent.getLongExtra("UUID", -1) == FROMLONG)
                                 processor(TEXT, TEXTLONG, FROMTEXTSCREEN);
                         }
                     };
 
-                    registerReceiver(receiver, filter, Consts.EXTERNAL_BROADCAST_API, null);
+                    registerReceiver(myInfoReceiver, myInfoFilter, Consts.EXTERNAL_BROADCAST_API, null);
 
                     sendBroadcast(new Intent(Consts.MYINFO_QUERY), Consts.EXTERNAL_BROADCAST_API);
                 } else {
@@ -86,15 +90,17 @@ public class CurrencyLookupService extends Service {
     public void onDestroy() {
         super.onDestroy();
 
-        //Log.d("CurrencyLookupService", "Stopped Service");
+        Log.d("CurrencyLookupService", "Stopped Service");
 
         CurrencyModule.unRegister();
         if (receiver != null)
             unregisterReceiver(receiver);
+        if ( myInfoReceiver != null )
+            unregisterReceiver(myInfoReceiver);
     }
 
     private String preprocessor(String input) {
-        //Log.d("Preprocessor", "Started");
+        Log.d("Preprocessor", "Started");
         if (input.startsWith(preferences.getString("keywordToActivate", String.valueOf(R.string.keywordValue)))) {
             String[] array = input.split(" ");
 
@@ -105,7 +111,7 @@ public class CurrencyLookupService extends Service {
     }
 
     private void processor(String TEXT, long TEXTLONG, String FROMTEXTSCREEN) {
-        //Log.d("Processor", "Started");
+        Log.d("Processor", "Started");
         String processResult = preprocessor(TEXT);
         if (processResult != null) {
             double currency = CurrencyModule.getCurrency(processResult);
